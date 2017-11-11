@@ -16,8 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include Chef::Mixin::ShellOut
-
 property :name, String, name_property: true
 property :ashift, Integer, default: 0
 property :disks, Array, default: []
