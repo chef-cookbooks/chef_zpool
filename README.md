@@ -40,7 +40,7 @@ A resource for creating and destroying zpools. This cookbook is forked from the 
 
 #### Examples
 
-```
+```ruby
 zpool "test" do
   disks [ "c0t2d0s0", "c0t3d0s0" ]
 end
