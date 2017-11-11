@@ -1,4 +1,3 @@
-# Berkshelf API server that indexes the UIS organization on chefp01
 source 'https://supermarket.chef.io'
 
 metadata
