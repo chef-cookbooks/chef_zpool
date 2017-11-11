@@ -1,40 +1,49 @@
-# OS generated files #
-######################
-.DS_Store
-Icon?
-nohup.out
-ehthumbs.db
-Thumbs.db
-
-# SASS #
-########
-.sass-cache
-
-# EDITORS #
-###########
-\#*
-.#*
+*.rbc
+.config
+coverage
+InstalledFiles
+lib/bundler/man
+pkg
+rdoc
+spec/reports
+test/tmp
+test/version_tmp
+tmp
+_Store
 *~
-*.sw[a-z]
-*.bak
-REVISION
-TAGS*
-tmtags
-*_flymake.*
-*_flymake
-*.tmproj
-mkmf.log
+*#
+.#*
+\#*#
+.*.sw[a-z]
+*.un~
+*.tmp
+*.bk
+*.bkup
 
-# Vagrant #
-###########
-.vagrant/*
+# ruby/bundler files
+.ruby-version
+.ruby-gemset
+.rvmrc
+Gemfile.lock
+.bundle
+*.gem
 
-# Bundler #
-###########
-bin/*
-vendor/*
-.bundle/*
+# YARD artifacts
+.yardoc
+_yardoc
+doc/
+.idea
 
-# Test Kitchen #
-################
-.kitchen/*
+# chef stuff
+Berksfile.lock
+.kitchen
+.kitchen.local.yml
+vendor/
+.coverage/
+.zero-knife.rb
+Policyfile.lock.json
+
+# vagrant stuff
+.vagrant/
+.vagrant.d/
+.kitchen/
