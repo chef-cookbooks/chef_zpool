@@ -1,4 +1,3 @@
----
 driver:
   name: vagrant
 
@@ -6,12 +5,13 @@ provisioner:
   name: chef_zero
   deprecations_as_errors: true
 
+verifier:
+  name: inspec
+
 platforms:
   - name: zpool-solaris-11
     driver:
       box: chef/solaris-11.3
-    run_list:
-      - recipe[kitchen_aide::solaris_busser]
   - name: ubuntu-16.04
   - name: freebsd-11.1
 suites:

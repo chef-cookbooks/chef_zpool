@@ -28,7 +28,7 @@ property :raid, [String, NilClass], equal_to: %w(mirror raidz raidz2 raidz3)
 action :create do
   if created?
     if online?
-      disks.each do |disk|
+      new_resource.disks.each do |disk|
         short_disk = disk.split('/').last
         next if vdevs.include?(short_disk)
         next if vdevs.include?(disk)
