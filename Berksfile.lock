@@ -9,6 +9,6 @@ DEPENDENCIES
 
 GRAPH
   kitchen_aide (0.1.0)
-  zpool (0.0.4)
+  zpool (0.1.0)
   zpool_tester (0.1.0)
     zpool (>= 0.0.0)

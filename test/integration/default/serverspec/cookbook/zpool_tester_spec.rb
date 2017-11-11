@@ -21,4 +21,8 @@ context 'zpool_tester' do
   describe command('zpool list') do
     its(:stdout) { is_expected.to match(/test/) }
   end
+
+  describe command('zpool status -v tank') do
+    its(:stdout) { is_expected.to match(/raidz1/) }
+  end
 end

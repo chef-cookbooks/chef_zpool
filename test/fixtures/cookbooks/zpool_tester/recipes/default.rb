@@ -1,13 +1,15 @@
 # install zpool support
-package 'zfs-fuse' do
+apt_update if platform_family?('debian')
+
+package 'zfs' do
   only_if { platform_family?('debian') }
 end
 
 # set up zpools
-%w(disk0 disk1 disk2 disk3 disk4 disk5).each do |disk|
-  execute disk  do
-    command "dd if=/dev/zero of=/#{disk} bs=1024 count=65536"
-    not_if { File.exist?("/#{disk}") }
+(0..8).each do |id|
+  execute id do
+    command "dd if=/dev/zero of=/disk#{id} bs=1024 count=65536"
+    not_if { File.exist?("/#{id}") }
   end
 end
 
@@ -34,4 +36,11 @@ end
 
 zpool 'test' do
   disks %w(/disk4 /disk5)
+end
+
+zpool 'create raidz' do
+  name 'tank'
+  # rubocop:disable Lint/ParenthesesAsGroupedExpression
+  disks (6..8).map { |id| "/disk#{id}" }
+  raid 'raidz'
 end

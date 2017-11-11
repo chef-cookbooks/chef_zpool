@@ -1,28 +1,23 @@
 # -*- mode: ruby -*-
 
 require 'bundler/setup'
+require 'cookstyle'
 require 'rubocop/rake_task'
 require 'foodcritic'
 
-# Style tests. Rubocop and Foodcritic
-namespace :style do
-  desc 'Run Ruby style checks'
-  RuboCop::RakeTask.new(:ruby)
-
-  desc 'Run Chef style checks'
-  FoodCritic::Rake::LintTask.new(:chef) do |t|
-    t.options = {
-      fail_tags: ['any'],
-    }
-  end
+RuboCop::RakeTask.new(:style) do |task|
+  task.options << '--display-cop-names'
 end
 
-desc 'Run all style checks'
-task style: ['style:chef', 'style:ruby']
+FoodCritic::Rake::LintTask.new(:lint) do |t|
+  t.options = {
+    fail_tags: ['any'],
+  }
+end
 
 desc 'Runs knife cookbook test'
 task :knife do
   sh 'bundle exec knife cookbook test zpool -o ../'
 end
 
-task default: [:style, :knife]
+task default: [:style, :lint]
