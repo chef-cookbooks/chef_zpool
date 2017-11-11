@@ -26,8 +26,8 @@ A resource for creating and destroying zpools. This cookbook is forked from the 
 
 #### Actions
 
-- `:create`
-- `destroy`
+- `:create` - Create a new zpool
+- `:destroy` - Destroy and existing zpool
 
 #### Properties
 
