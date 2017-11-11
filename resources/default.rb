@@ -16,6 +16,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+resource_name :zpool
+
 property :ashift, Integer, default: 0
 property :disks, Array, default: []
 property :force, [true, false], default: false
