@@ -12,4 +12,4 @@ issues_url        'https://github.com/chef-cookbooks/chef_zpool/issues'
   supports os
 end
 
-chef_version '>= 12.11'
+chef_version '>= 12.7'
