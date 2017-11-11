@@ -16,9 +16,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include Chef::Mixin::ShellOut
+resource_name :zpool
 
-property :name, String, name_property: true
 property :ashift, Integer, default: 0
 property :disks, Array, default: []
 property :force, [true, false], default: false
@@ -33,59 +32,61 @@ action :create do
         short_disk = disk.split('/').last
         next if vdevs.include?(short_disk)
         next if vdevs.include?(disk)
-        Chef::Log.info("Adding #{disk} to pool #{name}")
-        shell_out!("zpool add #{args_from_resource} #{name} #{disk}")
+        Chef::Log.info("Adding #{disk} to pool #{new_resource.name}")
+        shell_out!("zpool add #{args_from_resource} #{new_resource.name} #{disk}")
       end
     else
-      Chef::Log.warn("Zpool #{name} is #{state}")
+      Chef::Log.warn("Zpool #{new_resource.name} is #{state}")
     end
   else
-    Chef::Log.info("Creating zpool #{name}")
-    mount_point = mountpoint ? "-m #{mountpoint}" : ''
-    shell_out!("zpool create #{mount_point} #{args_from_resource} #{name} #{raid} #{disks.join(' ')}")
+    Chef::Log.info("Creating zpool #{new_resource.name}")
+    mount_point = new_resource.mountpoint ? "-m #{new_resource.mountpoint}" : ''
+    shell_out!("zpool create #{mount_point} #{args_from_resource} #{new_resource.name} #{new_resource.raid} #{new_resource.disks.join(' ')}")
   end
 end
 
 action :destroy do
   if created?
-    Chef::Log.info("Destroying zpool #{name}")
-    shell_out!("zpool destroy #{args_from_resource} #{name}")
+    Chef::Log.info("Destroying zpool #{new_resource.name}")
+    shell_out!("zpool destroy #{args_from_resource} #{new_resource.name}")
   end
 end
 
-def args_from_resource
-  args = []
-  args << '-f' if force
-  args << '-r' if recursive
+action_class do
+  def args_from_resource
+    args = []
+    args << '-f' if new_resource.force
+    args << '-r' if new_resource.recursive
 
-  # Properties
-  if ashift > 0
-    args << '-o'
-    args << format('ashift=%s', ashift)
+    # Properties
+    if new_resource.ashift > 0
+      args << '-o'
+      args << format('ashift=%s', new_resource.ashift)
+    end
+
+    args.join(' ')
   end
 
-  args.join(' ')
-end
-
-def created?
-  info.exitstatus == 0
-end
-
-def state
-  info.stdout.chomp
-end
-
-def info
-  shell_out("zpool list -H -o health #{name}")
-end
-
-def vdevs
-  @vdevs ||= shell_out!("zpool status #{name}").stdout.lines.map do |line|
-    next unless line.chomp =~ /^[\t]  /
-    line.chomp.split("\s")[0]
+  def created?
+    info.exitstatus == 0
   end
-end
 
-def online?
-  state == 'ONLINE'
+  def state
+    info.stdout.chomp
+  end
+
+  def info
+    shell_out("zpool list -H -o health #{new_resource.name}")
+  end
+
+  def vdevs
+    @vdevs ||= shell_out!("zpool status #{new_resource.name}").stdout.lines.map do |line|
+      next unless line.chomp =~ /^[\t]  /
+      line.chomp.split("\s")[0]
+    end
+  end
+
+  def online?
+    state == 'ONLINE'
+  end
 end
