@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 #
 # Author:: Ryan Hass (<rhass@chef.io>)
-# Author:: Martha Greenberg (<'marthag@mit.edu'>)
+# Author:: Martha Greenberg (<marthag@mit.edu>)
 # Copyright (C) 2017, Chef Software Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
