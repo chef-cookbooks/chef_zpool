@@ -9,12 +9,13 @@ verifier:
   name: inspec
 
 platforms:
-  - name: freebsd-10.4
-  - name: freebsd-11.1
+  - name: freebsd-10
+  - name: freebsd-11
   - name: solaris-11
     driver:
       box: chef/solaris-11.3
   - name: ubuntu-16.04
+
 suites:
   - name: default
     run_list:
